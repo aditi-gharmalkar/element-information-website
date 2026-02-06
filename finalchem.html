@@ -1,0 +1,2507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chemistry Explorer – Properties & Applications of Elements</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: radial-gradient(circle at top, #f5f9ff, #dbe6f3);
+    }
+
+    header {
+        background: linear-gradient(120deg, #1e3c72, #2a5298);
+        color: white;
+        text-align: center;
+        padding: 34px 15px 28px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+        position: relative;
+        overflow: hidden;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 32px;
+        letter-spacing: 0.6px;
+    }
+
+    header p {
+        margin: 8px 0 0;
+        font-size: 16px;
+        opacity: 0.95;
+    }
+
+    nav {
+        margin-top: 14px;
+    }
+
+    nav button {
+        margin: 6px;
+        padding: 11px 22px;
+        border-radius: 22px;
+        border: none;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        backdrop-filter: blur(4px);
+        transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    nav button:hover {
+        background: rgba(255,255,255,0.35);
+        transform: translateY(-2px);
+    }
+
+    .page {
+        display: none;
+        padding: 30px 15px;
+    }
+
+    .active {
+        display: block;
+    }
+
+    .container {
+        max-width: 560px;
+        margin: auto;
+        background: rgba(255,255,255,0.96);
+        padding: 38px;
+        border-radius: 22px;
+        box-shadow: 0 14px 32px rgba(0,0,0,0.2);
+        animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+        color: #1e3c72;
+        margin-top: 0;
+        position: relative;
+    }
+
+    h2::after {
+        content: "";
+        display: block;
+        width: 46px;
+        height: 3px;
+        background: linear-gradient(to right, #2a5298, #1e3c72);
+        margin-top: 6px;
+        border-radius: 2px;
+    }
+
+    p, li {
+        line-height: 1.6;
+    }
+
+    ul {
+        padding-left: 20px;
+    }
+
+    input {
+        width: 100%;
+        padding: 13px;
+        font-size: 16px;
+        margin-top: 14px;
+        border-radius: 10px;
+        border: 1px solid #ccd6e2;
+        outline: none;
+    }
+
+    input:focus {
+        border-color: #2a5298;
+        box-shadow: 0 0 0 3px rgba(42,82,152,0.15);
+    }
+
+    .main-btn {
+        width: 100%;
+        margin-top: 22px;
+        padding: 14px;
+        font-size: 16px;
+        border: none;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #2a5298, #1e3c72);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        letter-spacing: 0.4px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .main-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+    }
+
+    .output-box {
+        display: none;
+        margin-top: 26px;
+        padding: 24px;
+        background: linear-gradient(135deg, #f7faff, #eef3fb);
+        border-left: 5px solid #2a5298;
+        border-radius: 14px;
+        animation: fadeIn 0.4s ease;
+    }
+
+    footer {
+        text-align: center;
+        padding: 14px;
+        font-size: 13px;
+        color: #555;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🧪 Chemistry Explorer</h1>
+    <p>Properties & Applications of Chemical Elements</p>
+    <nav>
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('finder')">Element Finder</button>
+    </nav>
+</header>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+    <div class="container">
+        <h2>📘 Project Title</h2>
+        <p><b>Chemistry Explorer: Properties and Applications of Elements</b></p>
+
+        <h2>🎯 Objective</h2>
+        <p>
+            The objective of this project is to present essential information
+            about chemical elements in a simple, interactive, and student‑friendly
+            manner.
+        </p>
+
+        <h2>🔍 What the Site Does</h2>
+        <p>
+            Users can enter the name of a chemical element and instantly view
+            its symbol, structure, key properties, and important real‑life
+            applications.
+        </p>
+
+        <p style="margin-top:18px; font-style:italic; color:#555;">
+            Designed as a static educational web application.
+        </p>
+
+        <button class="main-btn" onclick="showPage('finder')">🚀 Start Exploring</button>
+    </div>
+</div>
+
+<!-- ELEMENT FINDER PAGE -->
+<div id="finder" class="page">
+    <div class="container">
+        <h2>⚛️ Element Finder</h2>
+
+        <input type="text" id="elementInput" placeholder="Enter element name (e.g., Oxygen)">
+        <button class="main-btn" onclick="processElement()">📊 Show Information</button>
+
+        <div class="output-box" id="outputBox">
+            <p id="symbol"></p>
+            <p id="structure"></p>
+            <p id="properties"></p>
+            <p id="applications"></p>
+            <p id="reference"></p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p><b>Chemistry Explorer</b></p>
+    <p>Subject: Chemistry | Topic: Properties & Applications of Elements</p>
+    <p style="font-size:12px; opacity:0.8;">Developed as an educational static web application</p>
+</footer>
+
+<!-- JavaScript logic for navigation and element processing -->
+<script>
+// Switches between Home and Element Finder pages
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+}
+
+// Processes user input and displays element details
+function processElement() {
+    const element = document.getElementById("elementInput").value.trim().toLowerCase();
+    const outputBox = document.getElementById("outputBox");
+
+    let symbol = "";
+    let structure = "";
+    let properties = "";
+    let applications = "";
+
+    if (element === "") {
+        outputBox.style.display = "block";
+        outputBox.innerHTML = "<b>Please enter an element name.</b>";
+        return;
+    }
+
+    switch (element) {
+         case "hydrogen":
+            symbol = "H";
+            structure = "Molecular (H₂)";
+            properties = `
+                <b>Properties:</b><br>
+                • Lightest element<br>
+                • Colorless & odorless gas<br>
+                • Highly flammable<br>
+                • Low density<br>
+                • Slightly soluble in water<br>
+                • Burns with a pale blue flame
+            `;
+            applications = `
+                <b>Applications:</b><br>
+                • Rocket fuel<br>
+                • Hydrogen fuel cells<br>
+                • Ammonia production<br>
+                • Petroleum refining<br>
+                • Used as coolant in power plants<br>
+                • Used in welding (oxy-hydrogen torch)
+            `;
+            reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+            break;
+
+        /* --------------------------- HELIUM ---------------------------- */
+        case "helium":
+            symbol = "He";
+            structure = "Face-centered cubic (FCC)";
+            properties = `
+                <b>Properties:</b><br>
+                • Inert and non-reactive<br>
+                • Very low boiling point<br>
+                • Second lightest element<br>
+                • Colorless & odorless<br>
+                • Non-flammable<br>
+                • Low density gas
+            `;
+            applications = `
+                <b>Applications:</b><br>
+                • Filling balloons & airships<br>
+                • Cooling MRI machines<br>
+                • Used in deep sea breathing mixtures<br>
+                • Semiconductor manufacturing<br>
+                • Gas chromatography carrier gas<br>
+                • Leak detection systems
+            `;
+            reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+            break;
+
+        /* --------------------------- LITHIUM ---------------------------- */
+        case "lithium":
+            symbol = "Li";
+            structure = "Body-centered cubic (BCC)";
+            properties = `
+                <b>Properties:</b><br>
+                • Lightest metal<br>
+                • Soft and silvery<br>
+                • Highly reactive<br>
+                • Good heat conductor<br>
+                • Low density<br>
+                • Reacts with water to form LiOH
+            `;
+            applications = `
+                <b>Applications:</b><br>
+                • Lithium-ion batteries<br>
+                • Aircraft and aerospace alloys<br>
+                • Treatment of bipolar disorder<br>
+                • High-temperature lubricating grease<br>
+                • Glass and ceramics manufacturing<br>
+                • Used in nuclear reactors
+            `;
+            reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+            break;
+
+
+        /* --------------------------- CARBON ---------------------------- */
+        case "carbon":
+            symbol = "C";
+            structure = "Diamond: FCC | Graphite: Hexagonal";
+            properties = `
+                <b>Properties:</b><br>
+                • Forms strong covalent bonds<br>
+                • Exists in multiple allotropes<br>
+                • Diamond is hardest natural substance<br>
+                • Graphite conducts electricity<br>
+                • High melting point<br>
+                • Forms millions of compounds
+            `;
+            applications = `
+                <b>Applications:</b><br>
+                • Pencils (graphite)<br>
+                • Jewelry (diamond)<br>
+                • Steel making<br>
+                • Water filters (activated carbon)<br>
+                • Carbon fiber manufacturing<br>
+                • Used in electronics (graphene)
+            `;
+            reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+            break;
+
+        /* --------------------------- OXYGEN ---------------------------- */
+        case "oxygen":
+            symbol = "O";
+            structure = "Molecular (O₂)";
+            properties = `
+                <b>Properties:</b><br>
+                • Supports combustion<br>
+                • Essential for respiration<br>
+                • Colorless gas<br>
+                • Slightly soluble in water<br>
+                • Highly reactive non-metal<br>
+                • Forms oxides with almost all elements
+            `;
+            applications = `
+                <b>Applications:</b><br>
+                • Medical oxygen cylinders<br>
+                • Steel manufacturing<br>
+                • Water purification<br>
+                • Welding & cutting metals<br>
+                • Breathing support systems<br>
+                • Rocket oxidizer
+            `;
+            reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+            break;
+//   FLOURINE
+         case "flourine":
+          symbol = "F";
+          structure = "Cubic";
+          properties=`
+          <b> Properties:</b><br>
+          Fluorine is the most electronegative and reactive element.<br>
+It is a pale-yellow diatomic gas at room temperature.<br>
+It acts as a powerful oxidizing agent.<br>
+<It forms very strong bonds with many elements, especially carbon.<br>
+It is highly corrosive and toxic.<br>
+It reacts vigorously with metals, water, and most organic compounds.<br>
+`;
+          applications =`
+          <b> Applications:</b><br>
+          Used in producing Teflon (PTFE) and other fluoropolymers.<br>
+             Essential in uranium enrichment as UF₆ gas.<br>
+             Used in manufacturing fluorinated pharmaceuticals.<br>
+             Used in refrigerants such as HFCs and HFEs.<br>
+             Applied in surface coatings for non-stick and chemical-resistant materials.<br>
+             Used in toothpaste and water fluoridation (as fluoride compounds).<br>`;
+             reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+// neon
+          case "neon":
+            symbol = "Ne";
+            structure = "FCC";
+            properties = `
+            <b> Properties</b><br>
+1. Ne is a colorless, odorless, inert noble gas with very low chemical reactivity.<br>
+2. It has a face-centered cubic (FCC) crystal structure in its solid form.<br>
+3. It glows bright reddish-orange in electric discharge.<br>
+4. It has very low boiling and melting points.<br>
+5. It is lighter than air and poorly soluble in water.<br>
+6. It is non-toxic and stable under all normal conditions.<br>`;
+
+        applications = `
+1. Used in neon signage for bright red-orange lighting.<br>
+2. Employed in high-voltage indicators and plasma display panels.<br>
+3. Used as a cryogenic refrigerant (after helium).<br>
+4. Utilized in gas lasers such as He–Ne lasers.<br>
+5. Serves as a buffer gas in certain vacuum tubes.<br>
+6. Used in specialized scientific detectors and imaging equipment.<br>`;
+
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+// sodium
+     case "sodium":
+        symbol = "Na";
+        structure = "BCC";
+        properties = `
+        <b>Properties</b><br>
+1. Na is a soft, silvery-white alkali metal with high reactivity.<br>
+2. It has a body-centered cubic (BCC) crystal structure.<br>
+3. It is highly reactive with water, forming hydrogen gas.<br>
+4. It has low density and can float on water.<br>
+5. It conducts heat and electricity efficiently.<br>
+6. It must be stored under oil due to rapid oxidation in air.<br>`;
+
+       applications = `
+       <b>Applications</b><br>
+1. Used in street lighting (sodium vapor lamps).<br>
+2. Employed as a coolant in some specialized nuclear reactors.<br>
+3. Used in manufacturing sodium compounds like NaOH and Na₂CO₃.<br>
+4. Applied in metallurgy for reducing metals from their ores.<br>
+5. Used in organic chemistry as a strong reducing agent.<br>
+6. Utilized in certain types of heat-transfer systems and chemical synthesis processes.<br>`;
+
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+    // magnesium 
+      case "magnesium":
+        symbol = "Mg";
+        structure = "HCP";
+        properties = `<b>Properties</b><br>
+1. Mg is a lightweight, silvery-white alkaline earth metal.<br>
+2. It has a hexagonal close-packed (HCP) crystal structure.<br>
+3. It burns with a bright white flame when ignited.<br>
+4. It has a high strength-to-weight ratio.<br>
+5. It is moderately reactive, forming a protective oxide layer in air.<br>
+6. It reacts with acids to release hydrogen gas.<br>`;
+
+   applications = `<b>Applications</b><br>
+1. Used in lightweight alloys for aircraft, automobiles, and electronics.<br>
+2. Employed in pyrotechnics and flares due to its bright white flame.<br>
+3. Used as a reducing agent in the production of metals like titanium and uranium.<br>
+4. Added to cast iron and steel to improve mechanical properties.<br>
+5. Used in medical applications such as magnesium-based supplements and antacids.<br>
+6. Utilized in sacrificial anodes for corrosion protection of pipelines and ships.<br>`;
+
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+     // aluminum 
+     case "aluminium":
+          symbol = "Al";
+          structure = "FCC";
+          properties = `<b>Properties</b><br>
+1. Al is a lightweight, silvery-white metal with good corrosion resistance.<br>
+2. It has a face-centered cubic (FCC) crystal structure.<br>
+3. It has high electrical and thermal conductivity.<br>
+4. It forms a protective oxide layer on exposure to air.<br>
+5. It is non-magnetic and malleable.<br>
+6. It has a high strength-to-weight ratio when alloyed.<br>`;
+
+applications = `<b>Applications</b><br> 
+1. Used in aircraft, automotive parts, and aerospace structures.<br>
+2. Widely used in packaging materials like cans and foils.<br>
+3. Employed in electrical transmission lines due to low density.<br>
+4. Used in construction (windows, doors, frames).<br>
+5. Utilized in kitchen utensils and cookware.<br>
+6. Used in alloys for enhanced strength and industrial applications.<br>
+`;
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+       
+// silicon
+    case "silicon":
+        symbol = "Si";
+        structure = "FCC";
+        properties = `<b>Properties</b><br>
+1. Si is a hard, brittle, blue-gray metalloid.<br>
+2. It has a diamond cubic crystal structure.<br>
+3. It is a semiconductor with moderate electrical conductivity.<br>
+4. It forms strong covalent bonds and has high melting point.<br>
+5. It is abundant in Earth’s crust, mainly as silica and silicates.<br>
+6. It is chemically reactive at high temperatures, forming silicon compounds.<br>`;
+
+applications = `<b>Applications</b><br>
+1. Used in semiconductor devices such as chips and transistors.<br>
+2. Essential in solar cells for photovoltaic energy conversion.<br>
+3. Used in glass, ceramics, and cement manufacturing.<br>
+4. Employed in silicones for lubricants, sealants, and medical materials.<br>
+5. Utilized in alloying metals like aluminum for improved strength.<br>
+6. Used in optical fibers and various electronic components.<br>`;
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+case "phosphorus":
+    symbol = "P";
+    structure = "Orthorhombic";
+    properties = `<b>Properties</b><br>
+1. P is a non-metal that exists in several allotropes (white, red, black).<br>
+2. Black phosphorus has a layered orthorhombic crystal structure<br>
+3. White phosphorus is highly reactive and glows in the dark (chemiluminescent).<br>
+4. Red phosphorus is more stable and less reactive than white phosphorus.<br>
+5. Phosphorus forms strong covalent bonds and is essential for biological molecules.<br>
+6. It burns to produce dense white fumes of phosphorus pentoxide.<br>`;
+
+applications = `<b>Applications</b><br>
+1. Used in fertilizers as phosphates for plant growth.<br>
+2. Employed in safety matches (red phosphorus).<br>
+3. Used in pesticides, herbicides, and detergents.<br>
+4. Essential in the production of steel and metal alloys.<br>
+5. Used in pyrotechnics and incendiaries (white phosphorus).<br>
+6. Utilized in semiconductors and LEDs (as dopants or phosphides).<br>`;
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+case "sulphur":
+    symbol="S";
+    structure ="orthorhombic";
+    applications =`<b>Applications</b><br>
+1. Used in the manufacture of sulfuric acid, one of the most important industrial chemicals.<br>
+2. Utilized in vulcanization of rubber to improve elasticity and strength.<br>
+3. Employed in making fertilizers such as ammonium sulfate.<br>
+4. Used in producing pesticides, fungicides, and insecticides.<br>
+5. Acts as a bleaching agent in the paper and textile industries.<br>
+6. Used in pharmaceuticals for making ointments and skin treatments.<br>`;
+
+properties = `<b>Properties</b><br>
+1. Sulfur is a yellow, brittle, non-metallic solid at room temperature.<br>
+2. It is insoluble in water but soluble in carbon disulfide.<br>
+3. Sulfur has a low melting point and burns with a blue flame.<br>
+4. It has a distinct odor when burned, forming sulfur dioxide gas.<br>
+5. Sulfur exhibits allotropy, mainly as rhombic and monoclinic forms.<br>
+6. It is chemically reactive, forming sulfides and sulfates with many elements.<br>`;
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+case "chlorine":
+    symbol="Cl";
+    structure="orthorhombic";
+    applications= `<b>Applications</b><br>   
+
+
+1. Used for disinfecting drinking water and swimming pools.<br>
+2. Employed in the manufacture of PVC (polyvinyl chloride) plastic.<br>
+3. Used in producing bleaching agents for paper and textiles.<br>
+4. Essential in making various household disinfectants and cleaning products.<br>
+5. Utilized in the pharmaceutical industry for synthesizing many medicines.<br>
+6. Used in producing solvents such as chloroform and carbon tetrachloride.<br>`;
+
+ properties=`<b>Properties</b><br>
+1. Chlorine is a greenish-yellow, poisonous gas with a strong pungent odor.<br>
+2. It is highly reactive and belongs to the halogen group.<br>
+3. Chlorine is soluble in water, forming acidic solutions like hydrochloric and hypochlorous acids.<br>
+4. It has a high electronegativity and strong oxidizing ability.<br>
+5. Chlorine is heavier than air and tends to accumulate in low areas.<br>
+6. It exists as diatomic molecules (Cl₂) under normal conditions.<br>`;
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+case "argon":
+    symbol = "Ar";
+    structure="FCC";
+    applications=`<b>Applications</b><br>
+1. Used as an inert shielding gas in welding to prevent metal oxidation.<br>
+2. Employed in filling incandescent and fluorescent light bulbs.<br>
+3. Used in gas chromatography as an inert carrier gas.<br>
+4. Provides an oxygen-free atmosphere for growing silicon and germanium crystals.<br>
+5. Utilized in preserving historical documents and materials by preventing oxidation.<br>
+6. Used in medical procedures like cryosurgery for tissue freezing.<br>`;
+
+
+ properties=`<b>Properties</b><br>
+1. Argon is a colorless, odorless, and tasteless noble gas.<br>
+2. It is chemically inert due to its stable filled electron shell.<br>
+3. Argon is denser than air and non-flammable.<br>
+4. It does not react with water, metals, or most chemicals.<br>
+5. Argon exists as monatomic atoms under normal conditions.<br>
+6. It liquefies at very low temperatures and has a low boiling point (−185.8°C).<br>`;
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+ case "potassium":
+    symbol="K";
+    structure="BCC";
+    applications=`<b>Applications</b><br>
+1. Used in fertilizers (potash) to promote plant growth.<br>
+2. Employed in making potassium hydroxide for soaps and detergents.<br>
+3. Used in producing potassium salts for medicines and dietary supplements.<br>
+4. Essential in laboratory reagents and chemical synthesis.<br>
+5. Used in fireworks to create purple-colored flames.<br>
+6. Utilized in heat-transfer and cooling systems in specialized industries<br>`;
+properties=`<b>Properties</b><br>
+1. Potassium is a soft, silvery-white alkali metal.<br>
+2. It reacts vigorously with water, producing hydrogen gas and heat.<br>
+3. Potassium is highly reactive and must be stored under oil.<br>
+4. It has a low density and can float on water.<br>
+5. It has a low melting point and cuts easily with a knife.<br>
+6. Potassium forms strong alkaline solutions and ionic compounds.<br>`;
+
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+ case "calcium":
+    symbol="Ca";
+    structure="FCC";
+    applications=`<b>Applications</b><br>
+
+1. Used in the production of cement and concrete as calcium oxide and calcium carbonate.<br>
+2. Employed in metallurgy to remove impurities from metals.<br>
+3. Used in making fertilizers like calcium ammonium nitrate.<br>
+4. Essential in manufacturing glass by providing stability and durability.<br>
+5. Used as a reducing agent in preparing other metals such as thorium and uranium.<br>
+6. Utilized in the food and pharmaceutical industries as a dietary supplement.<br>`;
+
+properties=`<b>Properties</b><br>
+1. Calcium is a silvery-white, fairly hard alkaline earth metal.<br>
+2. It reacts slowly with water, forming calcium hydroxide and hydrogen gas.<br>
+3. It has a low density and is lighter than many other metals.<br>
+4. Calcium forms a protective oxide-nitride coating when exposed to air.<br>
+5. It is an essential biological element necessary for bones and teeth.<br>
+6. Calcium readily forms ionic compounds such as calcium carbonate and calcium chloride.<br>`;
+
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+case "scandium":
+    symbol = "Sc";
+    structure = "SCC";
+    applications = `<b>Applications</b><br>
+1. Used in aluminum–scandium alloys to enhance strength and weldability for aerospace parts.<br>
+2. Applied in sports equipment like baseball bats and bicycle frames for improved performance.<br>
+3. Added to solid oxide fuel cells (SOFCs) to increase ionic conductivity.<br>
+4. Used in metal-halide lamps (scandium iodide) to produce bright, daylight-like light.<br>
+5. Utilized in high-performance 3D-printing alloys for lightweight structures.<br>
+6. Employed in lasers and optical materials for precision devices.<br>`;
+
+properties = `<b>Properties</b><br>
+1. Lightweight metal with low density (2.99 g/cm³).<br>
+2. High melting point (1541 °C), making it heat resistant.<br>
+3. Exhibits excellent corrosion resistance in air.<br>
+4. Forms strong alloys with aluminum due to grain refinement.<br>
+5. Shows good electrical conductivity and stable oxidation states.<br>
+6. Soft, silvery-white metal that is relatively reactive with acids.<br>`;
+
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+case "titanium":
+    symbol = "Ti";
+    structure = "BCC & HCP";
+    applications = `<b>Applications</b><br>
+1. Used in aerospace components due to its high strength-to-weight ratio.<br>
+2. Applied in medical implants like joint replacements because of its biocompatibility.<br>
+3. Utilized in chemical processing equipment for its excellent corrosion resistance.<br>
+4. Employed in marine structures and ship components for seawater resistance.<br>
+5. Used in sports equipment such as golf clubs and bicycle frames for light strength.<br>
+6. Added to pigments (titanium dioxide) for paints, plastics, and sunscreens.<br>`;
+
+properties = `<b>Properties</b><br>
+1. High strength-to-weight ratio, making it both strong and lightweight.<br>
+2. Excellent corrosion resistance, especially in seawater and chlorides.<br>
+3. High melting point (1668 °C) and good heat resistance.<br>
+4. Biocompatible and non-toxic, suitable for medical use.<br>
+5. Forms a protective oxide layer that prevents further oxidation.<br>
+6. Low thermal conductivity and non-magnetic nature.<br>`;
+
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+break;
+
+case  "vanadium":
+    symbol="V";
+    structure="BCC";
+    applications = `<b>Applications</b><br>
+    
+1.Vanadium is widely used to make high-strength low-alloy (HSLA) steels, tool steels, and spring steels due to its ability to form hard carbides and refine grain structure.<br>
+2.Vanadium is used in titanium–vanadium–aluminum alloys for aircraft parts, jet engines, and space vehicles because of their strength-to-weight ratio.<br>
+3.Vanadium ions are used in large-scale energy storage batteries for renewable energy systems (solar/wind) because of their stability in different oxidation states.<br>
+4.Vanadium pentoxide (V₂O₅) serves as a catalyst in:SO₂ → SO₃ conversion for sulfuric acid production<br>
+5.Vanadium compounds produce yellow, green, blue, and black pigments, used in ceramics, glass, and dyes.<br>
+6.Used in oxidation reactions, rubber manufacturing, and corrosion-resistant coatings.<br>`;
+
+properties= `<b>Properties</b><br>
+
+1.Vanadium is a hard, ductile metal, contributing hardness to alloys by forming stable carbides.<br>
+2.Melting point: 1910°C, making it suitable for high-temperature applications.<br>
+3.Common oxidation states: +2, +3, +4, +5, enabling its use in redox reactions and batteries.<br>
+4.Vanadium resists corrosion by forming stable oxide layers.<br>
+5.Forms compounds like vanadium oxides, halides, and vanadates; reacts with oxygen, halogens, and certain acids.<br>
+6.  “Chemistry of the Elements” by N.N. Greenwood & A. Earnshaw"<br>`;
+
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+ break;
+  
+
+ case "chromium":
+     symbol="Cr";
+    structure="BCC";
+
+       
+properties= `<b>Properties</b><br>
+
+
+**Callister, W. D. & Rethwisch, D. G. – *Materials Science and Engineering: An Introduction*, 9th/10th Edition, Wiley.**<br>
+
+
+1.  Chromium is a hard metal and significantly increases hardness when alloyed with steels.<br>
+2. Forms a protective chromium oxide (Cr₂O₃) layer responsible for stainless steel’s corrosion resistance.<br>
+3. Suitable for high-temperature environments.<br>
+4.  Chromium is used to improve surface durability in alloyed steels.<br>
+5.  Enhances hardness, strength, corrosion resistance, and toughness in steels and superalloys.<br>
+6. Remains BCC at all temperatures below melting.<br>`;
+
+applications = `<b>Applications</b><br>
+
+
+1.  Chromium contents of 10.5% or more give stainless steels their corrosion resistance.<br>
+2.Used for improving wear resistance, reducing friction, and protecting metal surfaces.<br>
+3.  Chromium contributes to oxidation resistance and strength at elevated temperatures.<br>
+4.  Chromium improves abrasion resistance in tool steels.<br>
+5. High melting point oxides used in furnace linings.<br>
+6. Used for corrosion-resistant coatings, colors, and protective layers.<br>`;
+
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+ break;
+
+ case "manganese":
+     symbol="Mn";
+     structure="CC ";
+    properties= `<b>Properties</b><br>
+
+1.Hard and brittle transition metal.<br>
+2.Shows multiple oxidation states from +2 to +7.<br>
+3.Forms colored compounds (e.g., purple permanganate).<br>
+4.High melting point: 1246°C.<br>
+5.Essential micronutrient for plants and animals.<br>
+6.Reacts slowly with water but dissolves in acids.<br>`;
+
+
+applications = `<b>Applications</b><br>
+1.Used in steel making to improve hardness and strength.<br>
+2.Manganese dioxide (MnO₂) used in dry-cell batteries.<br>
+3.Added to aluminum alloys for corrosion resistance.<br>
+4.Used in fertilizers as a micronutrient.<br>
+5.Potassium permanganate used for water purification.<br>
+6.Used in glass and ceramics to remove color (decolorizing agent).<br>
+`;
+reference = "<b>Reference</b>: J.D. Lee — Concise Inorganic Chemistry.<br>";
+
+    break;
+case "iron":
+    symbol="Fe";
+    structure="Bcc";
+    properties= `<b>Properties</b><br>
+
+
+1.Malleable, ductile, and metallic gray.<br>
+2.Ferromagnetic at room temperature.<br>
+3.Oxidation states mainly +2 and +3.<br>
+4.Reacts with moisture to form rust (Fe₂O₃·nH₂O).<br>
+5.High tensile strength.<br>
+6.Essential element in blood (hemoglobin).<br>`;
+
+applications = `<b>Applications</b><br>
+
+1.Production of steel (largest industrial use).
+2.Used in construction — buildings, bridges, pipelines.<br>
+3.Permanent magnets and magnetic materials.<br>
+4.Machinery, tools, and automobile bodies.<br>
+5.Iron salts used in water treatment (coagulants).<br>
+6.Used in shipbuilding due to strength and durability.<br>
+`;
+reference = "<b>Reference</b>:O.P. Tandon — Inorganic Chemistry.<br>";
+break;
+
+case "cobalt":
+ symbol ="Co";
+ structure="HCP";
+ properties= `<b>Properties</b><br>
+
+1.Hard, lustrous, and silver-gray metal.<br>
+2.Ferromagnetic like iron and nickel.<br>
+3. oxidation states +2 and +3.<br>
+4.High melting point: 1495°C.<br>
+5.Forms intensely colored complexes (e.g., cobalt blue).<br>
+6.Resists corrosion and oxidation at high temperatures.<br>`;
+applications = `<b>Applications</b><br>
+
+1.Used in superalloys for jet engines.<br>
+2.Key metal in Li-ion batteries (cathode material).<br>
+3.Used to make cutting tools and wear-resistant alloys.<br>
+4.Cobalt-60 used in radiotherapy and sterilization.<br>
+5.Used as cobalt blue pigment in glass and ceramics.<br>
+6.Catalyst in Fischer–Tropsch synthesis.<br>
+`;
+reference = "<b>Reference</b>:Atkins & Shriver — Inorganic Chemistry.<br>";
+break;
+
+case "nickel":
+symbol ="Ni";
+structure = "FCC";
+properties= `<b>Properties</b><br>
+1.Hard, malleable, and ductile metal.<br>
+2.Highly corrosion-resistant.<br>
+3.Exhibits oxidation states +2 and +3.<br>
+4.Good conductor of heat and electricity.<br>
+5.Forms numerous alloys with desirable properties.<br>
+6.Slightly ferromagnetic.<br>`;
+
+
+applications = `<b>Applications</b><br>
+
+1.Used in stainless steel and corrosion-resistant alloys.<br>
+2.Nickel plating for protection and appearance.<br>
+3.Used in Ni–Cd and Ni–MH batteries.<br>
+4.Catalyst in hydrogenation of organic compounds.<br>
+5.Component of coins and electrical components.<br>
+6.High-performance alloys used in turbines and aerospace.<br>
+`;
+reference = "<b>Reference</b>: F.A. Cotton — Chemical Applications of Group Theory.<br>";
+break;
+
+case  "copper":
+    symbol="Cu";
+    structure="FCC";
+properties= `<b>Properties</b><br>
+
+Excellent thermal and electrical conductivity.<br>
+Soft, malleable, and ductile metal.<br>
+Oxidation states +1 and +2.<br>
+Reddish-brown color.<br>
+Forms alloys easily (bronze, brass).<br>
+Corrosion-resistant due to protective green patina.<br>`;
+
+applications = `<b>Applications</b><br>
+
+1.Electrical wiring due to high conductivity.<br>
+2.Used in motors, generators, and electrical components.<br>
+3. pipes and roofing.<br>
+4.Formation of alloys like brass and bronze.<br>
+5.Copper salts used as fungicides.<br>
+6.Heat exchangers and radiators.<br>
+`;
+reference = "<b>Reference</b>: P.W. Atkins — Physical Chemistry.<br>";
+break;
+
+case "zinc" :
+    symbol ="Zn";
+    structure="HCP";
+
+properties= `<b>Properties</b><br>
+Bluish-white metal with moderate reactivity.<br>
+Low melting point: 419.5°C.<br>
+Exhibits oxidation state +2 commonly.<br>
+Forms protective oxide layer (corrosion-resistant).<br>
+Brittle at room temperature, malleable when heated.<br>
+Essential biological micronutrient.<br>`;
+
+
+applications = `<b>Applications</b><br>
+Galvanizing iron to prevent rusting.
+Alloying element in brass.<br>
+Used in Zn-carbon and Zn-air batteries.<br>
+Zinc oxide used in paints, rubber, sunscreens.<br>
+Used in die-casting for auto parts and toys.<br>
+Zinc sulfate used in fertilizers and medicine.<br>`;
+
+reference = "<b>Reference</b>: Hollemann & Wiberg — Inorganic Chemistry.<br>";
+
+break;
+
+case "gallium":
+    symbol = "Ga";
+    structure = "FCC";
+    properties =`<b>Properties</b><br>
+
+1. Soft, silvery metal with a low melting point (≈29.8°C).<br>
+2. Expands upon solidification like water.<br>
+3. Has a high boiling point relative to its melting point.<br>
+4. Good conductor of electricity.<br>
+5. Forms Ga³⁺ ions in compounds.<br>
+6. Shows amphoteric behaviour (reacts with acids and bases).<br>`;
+
+applications =`<b>Applications</b><br>
+
+1. Used in semiconductors such as GaAs<br>
+2. Essential in LEDs and laser diodes.<br>
+3. Used in photovoltaic cells (solar panels).<br>
+4. Applied in high-temperature thermometers.<br>
+5. Used in medical imaging (radiopharmaceuticals like Ga-67).<br>
+6. Alloying agent to lower melting points of materials.<br>`;
+reference = "<b>Reference</b>: J.D. Lee, Concise Inorganic Chemistry.";
+break;
+
+
+case "germanium":
+ symbol="Ge";
+ structure="FCC";
+
+properties=`<b>Properties</b><br>
+
+1. Hard, brittle metalloid with a grayish-white appearance.<br>
+2. Semiconductor with high electrical resistivity.<br>
+3. Transparent to infrared radiation.<br>
+4. Forms tetrahedral covalent structures similar to silicon.<br>
+5. Shows oxidation states +2 and +4.<br>
+6. Chemically stable and resistant to acids except HF.<br>`;
+
+applications=`<b>Applications</b><br>
+1. Used in fiber-optic communication systems.<br>
+2. Applied in semiconductor devices and transistors.<br>
+3. Key material in infrared optics and sensors.<br>
+4. Component of solar cell materials (Ge-based cells).<br>
+5. Used as a catalyst in polymerization processes (PET manufacture).<br>
+6. Applied in radiation detectors.<br>`;
+
+reference=" <b> Reference:</b> F.A. Cotton & G. Wilkinson, *Advanced Inorganic Chemistry.";
+break;
+
+
+case"arsenic":
+symbol= "As";
+structure=""
+properties=`<b>Properties</b><br>
+1. Exists in several allotropic forms (gray, yellow, black).<br>
+2. Metalloid with moderate electrical conductivity.<br>
+3. Toxic and forms many poisonous compounds.<br>
+4. Exhibits oxidation states −3, +3, and +5.<br>
+5. Combines readily with metals to form arsenides.<br>
+6. Sublimes upon heating without melting.<br>`;
+
+applications=`<b>Applications</b><br>
+
+1. Used in semiconductor materials such as GaAs.<br>
+2. Applied in wood preservatives (CCA formulations).<br>
+3. Utilized in insecticides and pesticides.<br>
+4. Employed in lead alloys to increase hardness.<br>
+5. Used in glass manufacturing for decolorizing.<br>
+6. Used in bronzing and pyrotechnics.<br>`;
+
+reference="<b>Reference:</b> Gary L. Miessler & Paul Fischer, *Inorganic Chemistry."
+break;
+
+case"selenium":
+symbol = "Se";
+structure = "Trigonal";
+properties = `<b>Properties</b><br>
+
+1. Selenium exists in several allotropic forms (gray, red, black), with gray crystalline selenium being the most stable.<br>
+2. It shows strong photoconductivity, meaning its electrical conductivity increases in light.<br>
+3. It is a nonmetal, chemically similar to sulfur and tellurium.<br>
+4. Selenium has moderate thermal stability, with a melting point of about 217 °C and boiling point near 685 °C.<br>
+5. It behaves as a semiconductor, making it useful in electrical and optical devices.<br>
+6. Selenium is an essential trace element for enzymes in living organisms but becomes toxic in excess.<br>`;
+
+
+applications =`<b>Applications of Selenium</b><br>
+
+1. Used in photocells, photocopiers, light meters, and solar cells due to photoconductivity.<br>
+2. Added to glass to remove green tints or create a red color.<br>
+3. Used in ceramic and plastic pigments (red, maroon colors).<br>
+4. Added to metals (like steel and copper alloys) to improve machinability and corrosion resistance.<br>
+5. Used in dietary supplements and fertilizers as a trace nutrient.<br>
+6. Acts as a vulcanizing agent in the rubber industry.<br>`;
+
+reference =" <b>Reference:-</b> Brown, Theodore L., et al. Chemistry:The Central Science, 14th ed., Pearson Education, 2018. (Chapter on Group 16 elements / Chalcogens – Properties and Uses of Selenium)";
+break;
+
+case"bromine":
+symbol = "Br"
+structure = "Orthorhombic";
+properties=`
+<b>Properties</b><br>
+1. Reddish-brown liquid at room temperature — one of only two elements that are liquid under standard conditions.<br>
+2. Has a strong, irritating odor and produces corrosive vapors.<br>
+3. A halogen (Group 17), highly reactive, especially with metals to form bromides.<br>
+4. Has moderate electronegativity and forms polar covalent compounds.<br>
+5. Slightly soluble in water, forming bromine water, an oxidizing solution.<br>
+6. Acts as a strong oxidizing agent, capable of reacting with many organic and inorganic substances.<br>`;
+
+applications=`<b>Applications</b><br>
+1. Used in flame retardants (e.g., brominated fire-resistant materials).<br>
+2. Used in water purification and swimming pool sanitation because of its disinfectant properties.<br>
+3. Important in photographic chemicals, especially silver bromide.<br>
+4. Used in the manufacturing of pharmaceuticals and medicinal intermediates.<br>
+5. Component in certain agricultural chemicals, including fumigants and pesticides.<br>
+6. Added to dyes and organic synthesis for bromination reactions.<br>`;
+
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018. (Chapter on Halogens – Properties and Uses of Bromine)";
+break;
+case "krypton":
+symbol = "Kr";
+structure = "Cubic";
+properties=`
+<b>Properties</b><br>
+1. Colorless, odorless noble gas at room temperature.<br>
+2. Chemically inert due to complete valence shell.<br>
+3. Exists as monoatomic gas.<br>
+4. High density compared to other noble gases.<br>
+5. Emits bright light when electrically excited.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in fluorescent and high-intensity lamps.<br>
+2. Used in photographic flash lamps.<br>
+3. Used in insulating gas-filled windows.<br>
+4. Used in excimer lasers.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "rubidium":
+symbol = "Rb";
+structure = "Body-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Soft, silvery-white alkali metal.<br>
+2. Highly reactive with air and water.<br>
+3. Low melting point.<br>
+4. Strong electropositive nature.<br>
+5. Forms ionic compounds easily.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in atomic clocks.<br>
+2. Used in photoelectric cells.<br>
+3. Used in vacuum tubes.<br>
+4. Used in research applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "strontium":
+symbol = "Sr";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Soft, silvery alkaline earth metal.<br>
+2. Highly reactive in air.<br>
+3. Forms Sr²⁺ ions.<br>
+4. Good conductor of electricity.<br>
+5. Burns with crimson red flame.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in fireworks for red color.<br>
+2. Used in ferrite magnets.<br>
+3. Used in glass manufacturing.<br>
+4. Used in medical imaging isotopes.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "yttrium":
+symbol = "Y";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Silvery-metallic transition metal.<br>
+2. Moderately reactive.<br>
+3. High melting point.<br>
+4. Forms stable oxides.<br>
+5. Good thermal stability.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in LED phosphors.<br>
+2. Used in superconductors.<br>
+3. Used in laser materials.<br>
+4. Used in special alloys.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "zirconium":
+symbol = "Zr";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Strong, corrosion-resistant metal.<br>
+2. High melting point.<br>
+3. Low neutron absorption capacity.<br>
+4. Good mechanical strength.<br>
+5. Forms protective oxide layer.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in nuclear reactors.<br>
+2. Used in surgical instruments.<br>
+3. Used in ceramics.<br>
+4. Used in aerospace alloys.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "niobium":
+symbol = "Nb";
+structure = "Body-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Soft, ductile transition metal.<br>
+2. High melting point.<br>
+3. Resistant to corrosion.<br>
+4. Exhibits superconductivity at low temperatures.<br>
+5. Forms stable oxides and alloys.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in superconducting magnets.<br>
+2. Used in high-strength steel alloys.<br>
+3. Used in aerospace components.<br>
+4. Used in medical implants.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "molybdenum":
+symbol = "Mo";
+structure = "Body-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Hard, silvery-gray metal.<br>
+2. Very high melting point.<br>
+3. Excellent strength at high temperatures.<br>
+4. Low thermal expansion.<br>
+5. Good resistance to corrosion.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in steel and superalloys.<br>
+2. Used as an industrial catalyst.<br>
+3. Used in electrical contacts.<br>
+4. Used in aerospace components.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "technetium":
+symbol = "Tc";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Radioactive transition metal.<br>
+2. No stable isotopes.<br>
+3. Silvery-gray appearance.<br>
+4. Corrosion resistant.<br>
+5. Artificially produced element.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in medical diagnostic imaging (Tc-99m).<br>
+2. Used as a corrosion inhibitor.<br>
+3. Used in nuclear research.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "ruthenium":
+symbol = "Ru";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Hard, brittle transition metal.<br>
+2. High melting point.<br>
+3. Chemically inert.<br>
+4. Excellent wear resistance.<br>
+5. Forms stable coordination compounds.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in electrical contacts.<br>
+2. Used as a catalyst.<br>
+3. Used in chip resistors.<br>
+4. Used in platinum alloys.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "rhodium":
+symbol = "Rh";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Silvery-white noble metal.<br>
+2. Highly reflective surface.<br>
+3. Resistant to corrosion.<br>
+4. High melting point.<br>
+5. Excellent catalytic activity.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in catalytic converters.<br>
+2. Used for jewelry plating.<br>
+3. Used in optical instruments.<br>
+4. Used in chemical catalysts.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "palladium":
+symbol = "Pd";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Soft, silvery-white metal.<br>
+2. Excellent corrosion resistance.<br>
+3. High catalytic activity.<br>
+4. Absorbs hydrogen readily.<br>
+5. Malleable and ductile.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in catalytic converters.<br>
+2. Used in electronics.<br>
+3. Used in dentistry.<br>
+4. Used in hydrogen purification.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "silver":
+symbol = "Ag";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Shiny white noble metal.<br>
+2. Highest electrical conductivity among metals.<br>
+3. Highly malleable and ductile.<br>
+4. Tarnishes slowly in air.<br>
+5. Excellent thermal conductivity.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in jewelry and coins.<br>
+2. Used in electrical conductors.<br>
+3. Used in photography.<br>
+4. Used in antimicrobial coatings.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "cadmium":
+symbol = "Cd";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Soft, bluish-white metal.<br>
+2. Toxic in nature.<br>
+3. Low melting point.<br>
+4. Good corrosion resistance.<br>
+5. Forms Cd²⁺ ions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in rechargeable batteries.<br>
+2. Used in pigments.<br>
+3. Used in electroplating.<br>
+4. Used in nuclear control rods.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "indium":
+symbol = "In";
+structure = "Tetragonal";
+properties=`
+<b>Properties</b><br>
+1. Soft, silvery metal.<br>
+2. Low melting point.<br>
+3. Good electrical conductivity.<br>
+4. Ductile and malleable.<br>
+5. Forms In³⁺ ions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in LCD screens.<br>
+2. Used in semiconductors.<br>
+3. Used in solders.<br>
+4. Used in coatings.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "tin":
+symbol = "Sn";
+structure = "Tetragonal";
+properties=`
+<b>Properties</b><br>
+1. Silvery-white metal.<br>
+2. Resistant to corrosion.<br>
+3. Malleable and ductile.<br>
+4. Exhibits allotropy.<br>
+5. Moderate electrical conductivity.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in tin plating.<br>
+2. Used in soldering.<br>
+3. Used in bronze alloys.<br>
+4. Used in food packaging.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "antimony":
+symbol = "Sb";
+structure = "Rhombohedral";
+properties=`
+<b>Properties</b><br>
+1. Lustrous gray metalloid.<br>
+2. Brittle and poor conductor of heat and electricity.<br>
+3. Shows both metallic and non-metallic behavior.<br>
+4. Exists in several allotropic forms.<br>
+5. Common oxidation states are +3 and +5.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in flame-retardant materials.<br>
+2. Used in alloys for batteries and bearings.<br>
+3. Used in semiconductors.<br>
+4. Used in pigments and paints.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "tellurium":
+symbol = "Te";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Brittle, silvery-white metalloid.<br>
+2. Poor electrical conductivity.<br>
+3. Shows semiconducting behavior.<br>
+4. Burns in air with blue flame.<br>
+5. Forms tellurides with metals.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in thermoelectric devices.<br>
+2. Used in semiconductor technology.<br>
+3. Used in metal alloys to improve machinability.<br>
+4. Used in solar cells.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "iodine":
+symbol = "I";
+structure = "Orthorhombic";
+properties=`
+<b>Properties</b><br>
+1. Dark violet solid at room temperature.<br>
+2. Sublimes easily to violet vapors.<br>
+3. Least reactive halogen.<br>
+4. Slightly soluble in water.<br>
+5. Forms iodide salts.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used as antiseptic.<br>
+2. Used in iodized salt.<br>
+3. Used in pharmaceuticals.<br>
+4. Used in photography.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "xenon":
+symbol = "Xe";
+structure = "Cubic";
+properties=`
+<b>Properties</b><br>
+1. Colorless, odorless noble gas.<br>
+2. Chemically inert under normal conditions.<br>
+3. Heavy and dense gas.<br>
+4. Emits blue light when electrically excited.<br>
+5. Forms compounds with fluorine and oxygen.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in high-intensity discharge lamps.<br>
+2. Used in flash photography.<br>
+3. Used as anesthetic agent.<br>
+4. Used in ion propulsion systems.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "cesium":
+symbol = "Cs";
+structure = "Body-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Soft, golden-colored alkali metal.<br>
+2. Extremely reactive with air and water.<br>
+3. Very low melting point.<br>
+4. Highly electropositive element.<br>
+5. Stored under inert atmosphere.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in atomic clocks.<br>
+2. Used in photoelectric cells.<br>
+3. Used in drilling fluids.<br>
+4. Used in vacuum tubes.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "barium":
+symbol = "Ba";
+structure = "Body-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Soft, silvery alkaline earth metal.<br>
+2. Highly reactive in air.<br>
+3. Forms Ba²⁺ ions.<br>
+4. Dense metal.<br>
+5. Produces green color in flame test.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in X-ray imaging (barium sulfate).<br>
+2. Used in drilling muds.<br>
+3. Used in fireworks.<br>
+4. Used in vacuum tubes.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "lanthanum":
+symbol = "La";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Soft, ductile rare-earth metal.<br>
+2. Tarnishes rapidly in air.<br>
+3. Good electrical conductivity.<br>
+4. Highly reactive.<br>
+5. Common oxidation state is +3.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in camera and telescope lenses.<br>
+2. Used in catalysts.<br>
+3. Used in optical glass.<br>
+4. Used in hydrogen storage alloys.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "cerium":
+symbol = "Ce";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Soft, silvery rare-earth metal.<br>
+2. Most abundant lanthanide.<br>
+3. Oxidizes readily in air.<br>
+4. Exhibits variable oxidation states.<br>
+5. Good reducing agent.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in catalytic converters.<br>
+2. Used in glass polishing powders.<br>
+3. Used in lighter flints.<br>
+4. Used in fuel additives.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "praseodymium":
+symbol = "Pr";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Soft, silvery rare-earth metal.<br>
+2. Highly reactive in air.<br>
+3. Forms green-colored salts.<br>
+4. Good magnetic properties.<br>
+5. Conducts electricity well.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in aircraft engine alloys.<br>
+2. Used in permanent magnets.<br>
+3. Used in coloring glass and ceramics.<br>
+4. Used in laser materials.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "neodymium":
+symbol = "Nd";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Silvery-white rare-earth metal.<br>
+2. Highly reactive and oxidizes in air.<br>
+3. Strong magnetic properties.<br>
+4. Forms Nd³⁺ ions.<br>
+5. Moderately hard metal.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in powerful permanent magnets.<br>
+2. Used in electric motors and generators.<br>
+3. Used in headphones and speakers.<br>
+4. Used in laser technology.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "promethium":
+symbol = "Pm";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Radioactive rare-earth metal.<br>
+2. No stable isotopes.<br>
+3. Soft and silvery in appearance.<br>
+4. Artificially produced element.<br>
+5. Forms Pm³⁺ ions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in nuclear batteries.<br>
+2. Used in luminous paints.<br>
+3. Used in research applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "samarium":
+symbol = "Sm";
+structure = "Rhombohedral";
+properties=`
+<b>Properties</b><br>
+1. Hard rare-earth metal.<br>
+2. Moderately reactive in air.<br>
+3. Forms stable Sm³⁺ ions.<br>
+4. Good neutron absorption ability.<br>
+5. Silver-white metallic appearance.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in permanent magnets.<br>
+2. Used in nuclear reactor control rods.<br>
+3. Used in lasers.<br>
+4. Used in medical research.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "europium":
+symbol = "Eu";
+structure = "Body-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Soft and silvery rare-earth metal.<br>
+2. Highly reactive among lanthanides.<br>
+3. Oxidizes rapidly in air.<br>
+4. Shows +2 and +3 oxidation states.<br>
+5. Good neutron absorber.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in red phosphors for TV and LED screens.<br>
+2. Used in fluorescent lamps.<br>
+3. Used in anti-counterfeiting inks.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "gadolinium":
+symbol = "Gd";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Silvery-white rare-earth metal.<br>
+2. Strong magnetic properties.<br>
+3. Good neutron absorption capability.<br>
+4. Moderately reactive.<br>
+5. Forms Gd³⁺ ions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used as MRI contrast agent.<br>
+2. Used in nuclear reactors.<br>
+3. Used in magnetic refrigeration.<br>
+4. Used in phosphors.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "terbium":
+symbol = "Tb";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Silvery-white rare-earth metal.<br>
+2. Moderately hard and ductile.<br>
+3. Oxidizes slowly in air.<br>
+4. Good magnetic properties.<br>
+5. Forms Tb³⁺ ions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in green phosphors for displays.<br>
+2. Used in solid-state devices.<br>
+3. Used in lasers.<br>
+4. Used in magnetostrictive materials.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "dysprosium":
+symbol = "Dy";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Rare-earth metal with metallic luster.<br>
+2. High magnetic susceptibility.<br>
+3. Moderately reactive in air.<br>
+4. High melting point.<br>
+5. Forms Dy³⁺ ions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in high-strength permanent magnets.<br>
+2. Used in nuclear reactor control rods.<br>
+3. Used in data storage devices.<br>
+4. Used in laser materials.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "holmium":
+symbol = "Ho";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Soft, silvery rare-earth metal.<br>
+2. Highest magnetic moment of any element.<br>
+3. Reacts slowly with oxygen.<br>
+4. High melting point.<br>
+5. Forms stable compounds.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in magnetic flux concentrators.<br>
+2. Used in lasers.<br>
+3. Used in nuclear control rods.<br>
+4. Used in research applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "erbium":
+symbol = "Er";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Silvery-white rare-earth metal.<br>
+2. Stable in air at room temperature.<br>
+3. Ductile and malleable.<br>
+4. Good neutron absorption ability.<br>
+5. Forms Er³⁺ ions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in optical fiber amplifiers.<br>
+2. Used in laser technology.<br>
+3. Used in nuclear technology.<br>
+4. Used in coloring glass.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "thulium":
+symbol = "Tm";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Least abundant rare-earth metal.<br>
+2. Soft and malleable.<br>
+3. Metallic luster.<br>
+4. Stable in dry air.<br>
+5. Forms Tm³⁺ ions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in portable X-ray devices.<br>
+2. Used in lasers.<br>
+3. Used in research applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "ytterbium":
+symbol = "Yb";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Soft, silvery rare-earth metal.<br>
+2. Low melting point.<br>
+3. Reacts slowly with oxygen.<br>
+4. Shows variable oxidation states.<br>
+5. Good electrical conductivity.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in lasers.<br>
+2. Used in stainless steel alloys.<br>
+3. Used in atomic clocks.<br>
+4. Used in stress gauges.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "lutetium":
+symbol = "Lu";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Silvery-white rare earth metal.<br>
+2. Hardest and densest lanthanide.<br>
+3. High melting point.<br>
+4. Resistant to corrosion in dry air.<br>
+5. Forms Lu³⁺ ions in compounds.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in petroleum refining catalysts.<br>
+2. Used in cancer treatment (radiotherapy isotopes).<br>
+3. Used in LED phosphors.<br>
+4. Used in scientific research.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "hafnium":
+symbol = "Hf";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Lustrous, silvery transition metal.<br>
+2. High melting point.<br>
+3. Chemically similar to zirconium.<br>
+4. High neutron absorption capacity.<br>
+5. Corrosion resistant.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in nuclear reactor control rods.<br>
+2. Used in superalloys.<br>
+3. Used in microprocessors.<br>
+4. Used in plasma cutting electrodes.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "tantalum":
+symbol = "Ta";
+structure = "Body-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Hard, blue-gray transition metal.<br>
+2. Extremely corrosion resistant.<br>
+3. High melting point.<br>
+4. Good conductor of heat and electricity.<br>
+5. Forms stable oxide layer.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in electronic capacitors.<br>
+2. Used in surgical instruments.<br>
+3. Used in chemical processing equipment.<br>
+4. Used in superalloys.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "tungsten":
+symbol = "W";
+structure = "Body-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Very hard and dense metal.<br>
+2. Highest melting point of all metals.<br>
+3. Good electrical conductivity.<br>
+4. Low vapor pressure.<br>
+5. Resistant to wear and corrosion.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in incandescent lamp filaments.<br>
+2. Used in cutting tools.<br>
+3. Used in electrical contacts.<br>
+4. Used in high-temperature alloys.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "rhenium":
+symbol = "Re";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Dense, silvery-white metal.<br>
+2. High melting point.<br>
+3. Resistant to corrosion.<br>
+4. Rare element in Earth’s crust.<br>
+5. Forms stable alloys.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in jet engine superalloys.<br>
+2. Used in electrical contacts.<br>
+3. Used as a catalyst in petroleum refining.<br>
+4. Used in thermocouples.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "osmium":
+symbol = "Os";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Bluish-white, very dense metal.<br>
+2. Highest density among elements.<br>
+3. Hard and brittle.<br>
+4. Forms toxic osmium tetroxide.<br>
+5. High melting point.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in fountain pen tips.<br>
+2. Used in electrical contacts.<br>
+3. Used in microscope staining.<br>
+4. Used in wear-resistant alloys.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "iridium":
+symbol = "Ir";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Very hard and brittle metal.<br>
+2. Extremely corrosion resistant.<br>
+3. High melting point.<br>
+4. Very dense transition metal.<br>
+5. Stable at high temperatures.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in spark plugs.<br>
+2. Used in crucibles for high temperatures.<br>
+3. Used in electrical contacts.<br>
+4. Used in medical devices.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "platinum":
+symbol = "Pt";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Lustrous, silvery-white metal.<br>
+2. Highly corrosion resistant.<br>
+3. Excellent catalyst.<br>
+4. High melting point.<br>
+5. Good electrical conductivity.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in catalytic converters.<br>
+2. Used in jewelry.<br>
+3. Used in laboratory equipment.<br>
+4. Used in fuel cells.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "gold":
+symbol = "Au";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Yellow, soft noble metal.<br>
+2. Highly malleable and ductile.<br>
+3. Excellent conductor of electricity.<br>
+4. Resistant to corrosion.<br>
+5. Exists in native form.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in jewelry.<br>
+2. Used in electronic circuits.<br>
+3. Used in dentistry.<br>
+4. Used in coinage and investment.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "mercury":
+symbol = "Hg";
+structure = "Rhombohedral";
+properties=`
+<b>Properties</b><br>
+1. Only metal liquid at room temperature.<br>
+2. Silvery and dense.<br>
+3. Poor conductor of heat.<br>
+4. Forms amalgams with metals.<br>
+5. Highly toxic element.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in thermometers and barometers.<br>
+2. Used in fluorescent lamps.<br>
+3. Used in electrical switches.<br>
+4. Used in chemical research (limited).<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "thallium":
+symbol = "Tl";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Soft, gray post-transition metal.<br>
+2. Highly toxic element.<br>
+3. Low melting point.<br>
+4. Exhibits +1 and +3 oxidation states.<br>
+5. Poor electrical conductivity compared to metals.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in infrared detectors.<br>
+2. Used in optical lenses.<br>
+3. Used in electronic components.<br>
+4. Used in medical imaging isotopes (limited use).<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "lead":
+symbol = "Pb";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Soft, dense, bluish-gray metal.<br>
+2. Highly malleable and ductile.<br>
+3. Resistant to corrosion.<br>
+4. Poor conductor of electricity.<br>
+5. Toxic heavy metal.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in lead-acid batteries.<br>
+2. Used in radiation shielding.<br>
+3. Used in cable sheathing.<br>
+4. Used in construction materials (restricted).<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "bismuth":
+symbol = "Bi";
+structure = "Rhombohedral";
+properties=`
+<b>Properties</b><br>
+1. Brittle, pinkish-white metal.<br>
+2. Lowest thermal conductivity among metals.<br>
+3. Expands on solidification.<br>
+4. Low toxicity compared to other heavy metals.<br>
+5. Diamagnetic in nature.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in pharmaceuticals (antacids).<br>
+2. Used in low-melting alloys.<br>
+3. Used in cosmetics.<br>
+4. Used in fire detection systems.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "polonium":
+symbol = "Po";
+structure = "Simple cubic";
+properties=`
+<b>Properties</b><br>
+1. Rare and highly radioactive element.<br>
+2. Silvery-gray appearance.<br>
+3. Very unstable due to radioactivity.<br>
+4. Emits alpha radiation.<br>
+5. Highly toxic.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used as a heat source in space equipment.<br>
+2. Used in antistatic devices.<br>
+3. Used in scientific research.<br>
+4. Limited industrial applications due to radioactivity.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "astatine":
+symbol = "At";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Rarest naturally occurring halogen.<br>
+2. Highly radioactive element.<br>
+3. Shows both metallic and nonmetallic properties.<br>
+4. Exists only in trace amounts.<br>
+5. Very unstable element.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in targeted cancer therapy research.<br>
+2. Used in radiochemistry studies.<br>
+3. Used only in experimental applications.<br>
+4. No large-scale commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "radon":
+symbol = "Rn";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Colorless, odorless radioactive noble gas.<br>
+2. Formed from radioactive decay of radium.<br>
+3. Chemically inert.<br>
+4. High density among noble gases.<br>
+5. Emits alpha radiation.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in cancer radiotherapy (limited).<br>
+2. Used in geological research.<br>
+3. Used in earthquake prediction studies.<br>
+4. Mainly studied for health impact research.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "francium":
+symbol = "Fr";
+structure = "Body-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Extremely rare and radioactive alkali metal.<br>
+2. Highly reactive.<br>
+3. Low melting point.<br>
+4. Exists only in trace amounts.<br>
+5. Very unstable element.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied for atomic structure analysis.<br>
+3. No commercial applications.<br>
+4. Used in spectroscopy experiments.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "radium":
+symbol = "Ra";
+structure = "Body-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Radioactive alkaline earth metal.<br>
+2. Silvery-white when freshly prepared.<br>
+3. Highly reactive with water.<br>
+4. Emits alpha radiation.<br>
+5. Glows in the dark due to radioactivity.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in cancer treatment (historical).<br>
+2. Used in luminous paints (obsolete).<br>
+3. Used in scientific research.<br>
+4. Used as radiation source.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "actinium":
+symbol = "Ac";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Silvery radioactive metal.<br>
+2. Highly reactive.<br>
+3. Emits alpha radiation.<br>
+4. Belongs to actinide series.<br>
+5. Glows faintly in dark due to radioactivity.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in neutron sources.<br>
+2. Used in radiotherapy research.<br>
+3. Used in scientific studies of actinides.<br>
+4. No commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "thorium":
+symbol = "Th";
+structure = "Face-centered cubic";
+properties=`
+<b>Properties</b><br>
+1. Weakly radioactive actinide metal.<br>
+2. Silvery-white and ductile.<br>
+3. High melting point.<br>
+4. Forms stable oxide (ThO₂).<br>
+5. Resistant to corrosion in air.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used as nuclear fuel (experimental).<br>
+2. Used in high-temperature ceramics.<br>
+3. Used in gas mantles (historical).<br>
+4. Used in metallurgical research.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "protactinium":
+symbol = "Pa";
+structure = "Body-centered tetragonal";
+properties=`
+<b>Properties</b><br>
+1. Rare and radioactive actinide metal.<br>
+2. Silvery-gray appearance.<br>
+3. Highly reactive with oxygen and water.<br>
+4. Emits alpha radiation.<br>
+5. Exists mainly in +5 oxidation state.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied for nuclear chemistry.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "uranium":
+symbol = "U";
+structure = "Orthorhombic";
+properties=`
+<b>Properties</b><br>
+1. Dense, radioactive metal.<br>
+2. Silvery-gray in color.<br>
+3. Occurs naturally in Earth’s crust.<br>
+4. Multiple oxidation states (+3 to +6).<br>
+5. Undergoes nuclear fission.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used as nuclear fuel.<br>
+2. Used in nuclear weapons (controlled).<br>
+3. Used in radiation shielding.<br>
+4. Used in geological dating.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "neptunium":
+symbol = "Np";
+structure = "Orthorhombic";
+properties=`
+<b>Properties</b><br>
+1. First synthetic transuranium element.<br>
+2. Silvery metallic appearance.<br>
+3. Radioactive element.<br>
+4. Reacts with oxygen easily.<br>
+5. Multiple oxidation states.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in neutron detection equipment.<br>
+2. Used in nuclear research.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "plutonium":
+symbol = "Pu";
+structure = "Monoclinic";
+properties=`
+<b>Properties</b><br>
+1. Radioactive actinide metal.<br>
+2. Silvery-gray when freshly prepared.<br>
+3. Highly toxic.<br>
+4. Shows multiple allotropes.<br>
+5. Undergoes nuclear fission.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used as nuclear reactor fuel.<br>
+2. Used in nuclear weapons (controlled).<br>
+3. Used in space power sources (RTGs).<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "americium":
+symbol = "Am";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive metal.<br>
+2. Silvery-white appearance.<br>
+3. Emits alpha radiation.<br>
+4. Forms stable compounds.<br>
+5. Oxidizes slowly in air.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in smoke detectors.<br>
+2. Used in industrial gauges.<br>
+3. Used in nuclear research.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "americium":
+symbol = "Am";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive metal.<br>
+2. Silvery-white appearance.<br>
+3. Emits alpha radiation.<br>
+4. Forms stable compounds.<br>
+5. Oxidizes slowly in air.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in smoke detectors.<br>
+2. Used in industrial gauges.<br>
+3. Used in nuclear research.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "curium":
+symbol = "Cm";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive metal.<br>
+2. Hard and silvery in appearance.<br>
+3. Emits alpha particles.<br>
+4. Highly radioactive.<br>
+5. Forms Cm³⁺ ions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in space exploration instruments.<br>
+2. Used in nuclear research.<br>
+3. Used as heat source in RTGs.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "berkelium":
+symbol = "Bk";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive actinide.<br>
+2. Silvery appearance.<br>
+3. Highly unstable.<br>
+4. Emits alpha radiation.<br>
+5. Rarely produced element.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in scientific research.<br>
+2. Used to synthesize heavier elements.<br>
+3. No commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "californium":
+symbol = "Cf";
+structure = "Hexagonal";
+properties=`
+<b>Properties</b><br>
+1. Strong neutron emitter.<br>
+2. Synthetic radioactive metal.<br>
+3. Silvery appearance.<br>
+4. Highly radioactive.<br>
+5. Dense actinide element.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in neutron radiography.<br>
+2. Used in cancer treatment research.<br>
+3. Used in oil exploration.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "einsteinium":
+symbol = "Es";
+structure = "Cubic";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive element.<br>
+2. Named after Albert Einstein.<br>
+3. Highly unstable.<br>
+4. Emits alpha radiation.<br>
+5. Exists only in minute quantities.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used in scientific research.<br>
+2. Used to create heavier elements.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "fermium":
+symbol = "Fm";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive element.<br>
+2. Extremely rare.<br>
+3. Highly unstable.<br>
+4. Produced in nuclear reactions.<br>
+5. Actinide series element.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only for scientific research.<br>
+2. Used in nuclear chemistry studies.<br>
+3. No commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "mendelevium":
+symbol = "Md";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive element.<br>
+2. Named after Dmitri Mendeleev.<br>
+3. Highly unstable.<br>
+4. Emits alpha radiation.<br>
+5. Exists only in very small quantities.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied for actinide chemistry.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "nobelium":
+symbol = "No";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive actinide.<br>
+2. Named after Alfred Nobel.<br>
+3. Very unstable and short-lived.<br>
+4. Forms No²⁺ ions readily.<br>
+5. Exists only in laboratory conditions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only for research purposes.<br>
+2. Studied for nuclear structure analysis.<br>
+3. No commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "lawrencium":
+symbol = "Lr";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive element.<br>
+2. Last element of the actinide series.<br>
+3. Extremely unstable.<br>
+4. Exists only in trace amounts.<br>
+5. Exhibits metallic behavior.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied for periodic table trends.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "rutherfordium":
+symbol = "Rf";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic superheavy element.<br>
+2. Highly radioactive.<br>
+3. Very short half-life.<br>
+4. Displays properties similar to hafnium.<br>
+5. Exists only in laboratory synthesis.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in nuclear research.<br>
+2. Studied for superheavy element behavior.<br>
+3. No commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "dubnium":
+symbol = "Db";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive element.<br>
+2. Very unstable with short half-life.<br>
+3. Belongs to the transactinide elements.<br>
+4. Exists only in laboratory experiments.<br>
+5. Shows transition-metal-like behavior.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only for scientific research.<br>
+2. Studied for nuclear reaction mechanisms.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "seaborgium":
+symbol = "Sg";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic superheavy element.<br>
+2. Highly radioactive with short half-life.<br>
+3. Not found naturally on Earth.<br>
+4. Exhibits properties similar to tungsten.<br>
+5. Exists only in laboratory conditions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied for transactinide chemistry.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "bohrium":
+symbol = "Bh";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive element.<br>
+2. Very unstable and short-lived.<br>
+3. Belongs to the transactinide series.<br>
+4. Shows transition-metal-like behavior.<br>
+5. Exists only in trace laboratory amounts.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only for nuclear research.<br>
+2. Studied to understand heavy element properties.<br>
+3. No commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "hassium":
+symbol = "Hs";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic superheavy element.<br>
+2. Highly radioactive.<br>
+3. Very short half-life.<br>
+4. Expected to behave like osmium.<br>
+5. Exists only in laboratory synthesis.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only for scientific research.<br>
+2. Studied for chemical periodic trends.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "meitnerium":
+symbol = "Mt";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive element.<br>
+2. Extremely rare and unstable.<br>
+3. Short half-life.<br>
+4. Belongs to group of transition metals.<br>
+5. Exists only in research laboratories.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied in nuclear chemistry.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "darmstadtium":
+symbol = "Ds";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic superheavy element.<br>
+2. Highly radioactive.<br>
+3. Very short-lived isotopes.<br>
+4. Expected to behave like platinum group metals.<br>
+5. Exists only in laboratory conditions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied for superheavy element behavior.<br>
+3. No commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "roentgenium":
+symbol = "Rg";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive element.<br>
+2. Extremely unstable.<br>
+3. Short half-life.<br>
+4. Expected to show noble-metal characteristics.<br>
+5. Exists only in laboratory synthesis.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in nuclear research.<br>
+2. Studied for theoretical chemistry.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "copernicium":
+symbol = "Cn";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic superheavy element.<br>
+2. Highly radioactive.<br>
+3. Very short half-life.<br>
+4. May show properties of both metals and noble gases.<br>
+5. Exists only in trace amounts.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied for relativistic effects in chemistry.<br>
+3. No commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "nihonium":
+symbol = "Nh";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive element.<br>
+2. Very unstable and short-lived.<br>
+3. Belongs to group 13.<br>
+4. Exists only in laboratory experiments.<br>
+5. Predicted to show metallic behavior.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only for scientific research.<br>
+2. Studied for periodic table trends.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "flerovium":
+symbol = "Fl";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic superheavy element.<br>
+2. Highly radioactive.<br>
+3. Very short half-life.<br>
+4. May show noble-gas-like properties.<br>
+5. Exists only in laboratory synthesis.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied for superheavy chemistry.<br>
+3. No commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "moscovium":
+symbol = "Mc";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive element.<br>
+2. Extremely unstable.<br>
+3. Very short half-life.<br>
+4. Belongs to group 15.<br>
+5. Exists only in laboratory experiments.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only for scientific research.<br>
+2. Studied for nuclear stability trends.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "livermorium":
+symbol = "Lv";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic superheavy element.<br>
+2. Highly radioactive.<br>
+3. Short half-life.<br>
+4. Belongs to group 16.<br>
+5. Exists only in laboratory conditions.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied for transactinide chemistry.<br>
+3. No commercial use.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "tennessine":
+symbol = "Ts";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic radioactive halogen.<br>
+2. Extremely unstable.<br>
+3. Short half-life.<br>
+4. Shows both metallic and nonmetallic character.<br>
+5. Exists only in laboratory synthesis.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only for scientific research.<br>
+2. Studied for halogen trends.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+case "oganesson":
+symbol = "Og";
+structure = "Unknown";
+properties=`
+<b>Properties</b><br>
+1. Synthetic noble gas element.<br>
+2. Highly radioactive and unstable.<br>
+3. Very short half-life.<br>
+4. Predicted to be more reactive than other noble gases.<br>
+5. Exists only in laboratory experiments.<br>`;
+applications=`
+<b>Applications</b><br>
+1. Used only in scientific research.<br>
+2. Studied for noble gas behavior at high atomic numbers.<br>
+3. No commercial applications.<br>`;
+reference="<b>Reference:-</b>Brown, Theodore L., et al. Chemistry: The Central Science, 14th ed., Pearson Education, 2018.";
+break;
+
+
+
+        default:
+            outputBox.style.display = "block";
+            outputBox.innerHTML = "<b>Element not found.</b><br>Please enter a valid element name.";
+            return;
+    }
+
+    outputBox.style.display = "block";
+    document.getElementById("symbol").innerHTML = "<b>Symbol:</b> " + symbol;
+    document.getElementById("structure").innerHTML = "<b>Structure:</b> " + structure;
+    document.getElementById("properties").innerHTML = properties;
+    document.getElementById("applications").innerHTML = applications;
+     document.getElementById("reference").innerHTML = reference;
+}
+</script>
+
+</body>
+</html>
